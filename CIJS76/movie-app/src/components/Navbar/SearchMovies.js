@@ -53,7 +53,7 @@ function SearchMovies(props) {
         </div>
       ) : (
         <NotFound>
-          <h1>sdadsa</h1>
+          <h1>Your search for "keywords" did not have any matchs</h1>
         </NotFound>
       )}
     </SearchPane>

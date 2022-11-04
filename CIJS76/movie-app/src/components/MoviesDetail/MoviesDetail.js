@@ -50,8 +50,8 @@ function MoviesDetail(props) {
                   moment(movie.first_air_date).format("DD/MM/YYYY"))}
             </p>
             <p className="runtime">
-              Runtime:{" "}
-              {(movie && movie.runtime) || (movie && movie.episode_run_time)}{" "}
+              Runtime:
+              {(movie && movie.runtime) || (movie && movie.epis0de_run_time)}
             </p>
             <p className="overView">{movie && movie.overview} </p>
           </div>

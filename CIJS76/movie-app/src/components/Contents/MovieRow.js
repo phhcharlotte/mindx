@@ -88,7 +88,7 @@ function MovieRow(props) {
         {movies &&
           movies.length > 0 &&
           movies.map((movie, index) => {
-            console.log(movie)
+            console.log(movie);
             if (movie.poster_path && movie.backdrop_path !== null) {
               let imageUrl = isNetflix
                 ? `http://image.tmdb.org/t/p/original/${movie.poster_path}`
@@ -106,9 +106,7 @@ function MovieRow(props) {
                 </div>
               );
             }
-            return(
-              <div></div>
-            )
+            return <div></div>;
           })}
       </MovieSlider>
       <div
@@ -145,6 +143,7 @@ const MovieRowContainer = styled.div`
 
   .btnLeft {
     position: absolute;
+    display: flex;
     top: 50%;
     left: 30px;
     z-index: 20;
@@ -154,7 +153,7 @@ const MovieRowContainer = styled.div`
     height: 50px;
     width: 40px;
     border-radius: 40px;
-    display: flex;
+
     align-items: center;
     transform: translateY(-20%);
     &:hover {
@@ -177,6 +176,7 @@ const MovieRowContainer = styled.div`
   }
   .btnRight {
     position: absolute;
+    display: flex;
     top: 50%;
     right: 30px;
     z-index: 20;
@@ -186,7 +186,6 @@ const MovieRowContainer = styled.div`
     height: 50px;
     width: 40px;
     border-radius: 40px;
-    display: flex;
     align-items: center;
     transform: translateY(-20%);
     &:hover {
@@ -215,7 +214,7 @@ const MovieSlider = styled.div`
   transition: all 0.3 linear;
   ueser-select: none;
   overflow-y: hidden;
-  overflow-x: auto;
+  overflow-x: hidden;
   padding-top: 28px;
   padding-bottom: 28px;
   scroll-behavior: smooth;

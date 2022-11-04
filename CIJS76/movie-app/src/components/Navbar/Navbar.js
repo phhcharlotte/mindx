@@ -1,4 +1,4 @@
-import NetflixLogo from "../../assets/images/Netflix-logo-red-black-png.png";
+import NetflixLogo from "../../assets/images/Logonetflix.png";
 import { MdSearch } from "react-icons/md";
 import styled from "styled-components";
 import { useState } from "react";
@@ -26,13 +26,14 @@ const Navbar = (props) => {
       style={
         scrollY < 50
           ? { backgroundColor: " transparent" }
-          : { backgroundColor: " var(--color-backgruond)" }
+          : { backgroundColor: " var(--color-background)" }
       }
     >
       <div className="navContainer">
         <div className="Logo" onClick={goHome}>
           <img src={NetflixLogo} alt="" />
         </div>
+
         <div className="navSearch">
           <MdSearch className="iconSearch" />
           <input
@@ -57,6 +58,7 @@ const Navigation = styled.div`
   transition-timing-function: ease-in;
   transition: all 1s;
   z-index: 10;
+  display: flex;
   @media only screen and (max-width: 600px) {
     height: 100px;
   }
@@ -73,11 +75,10 @@ const Navigation = styled.div`
 
     .Logo {
       width: 120px;
+      cursor: pointer;
       img {
         width: 100%;
       }
-
-      cursor: pointer;
     }
 
     .navSearch {
