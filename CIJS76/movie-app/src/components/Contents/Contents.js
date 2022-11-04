@@ -1,30 +1,112 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { FaArrowAltCircleUp } from "react-icons/fa";
 import MovieRow from "./MovieRow";
+import * as ACTIONS from "../store/actions";
+import styled from "styled-components";
+import { animateScroll as scroll } from "react-scroll";
+import { useScrollY } from "../hooks";
 
-const movies = [
-  "https://youthvietnam.vn/wp-content/uploads/2021/06/Poster-phim-quang-cao-co-hieu-qua-khong.jpg",
-  "https://youthvietnam.vn/wp-content/uploads/2021/06/Cac-yeu-to-giup-poster-phim-thanh-cong.jpg",
-  "https://youthvietnam.vn/wp-content/uploads/2021/06/mau-poster-phim-viet-nam.jpg",
-  "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809230YFLaGg3GI3SV21M.jpg",
-  "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809284X4pyEDCj7CFMsGu.jpg",
-  "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809317niNpzY2khA3tzMg.jpg",
-  "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809340Y397jnilYDd15KN.jpg",
-  "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809401rAfP9FLErkemlp1.jpg",
-];
-
+const ScrollToTop = () => {
+  scroll.scrollToTop();
+};
 function Contents(props) {
+  const dispatch = useDispatch();
+  const [scrollY] = useScrollY();
+  const {
+    NetflixOriginals,
+    TrendingMovies,
+    TopRatedMovies,
+    ActionMovies,
+    ComedyMovies,
+    HorrorMovies,
+    RomanceMovies,
+    Documentaries,
+  } = useSelector((state) => state.infoMovies);
+
+  useEffect(() => {
+    
+    dispatch(ACTIONS.getNetflixOriginals());
+    dispatch(ACTIONS.getTrendingMovies());
+    dispatch(ACTIONS.getTopRatedMovies());
+    dispatch(ACTIONS.getActionMovies());
+    dispatch(ACTIONS.getComedyMovies());
+    dispatch(ACTIONS.getHorrorMovies());
+    dispatch(ACTIONS.getRomanceMovies());
+    dispatch(ACTIONS.getDocumentaries());
+  }, [dispatch]);
+
   return (
     <div>
-      <MovieRow movies={movies} title="Netflix Originals" isNetflix={true} />
-      <MovieRow movies={movies} title="Trending Movies" />
-      <MovieRow movies={movies} title="Top Rated Movies " />
-      <MovieRow movies={movies} title="Action Movies" />
-      <MovieRow movies={movies} title="Comedy Movies" />
-      <MovieRow movies={movies} title="Horror Movies" />
-      <MovieRow movies={movies} title="Romance Movies" />
-      <MovieRow movies={movies} title="Documentaries " />
+      <MovieRow
+        movies={NetflixOriginals}
+        title="Netflix Originals"
+        isNetflix={true}
+        idSection="netflix"
+      />
+      <MovieRow
+        movies={TrendingMovies}
+        title="Trending Movies"
+        idSection="trending"
+      />
+      <MovieRow
+        movies={TopRatedMovies}
+        title="Top Rated Movies "
+        idSection="topRated"
+      />
+      <MovieRow
+        movies={ActionMovies}
+        title="Action Movies"
+        idSection="actionMovies"
+      />
+      <MovieRow
+        movies={ComedyMovies}
+        title="Comedy Movies"
+        idSection="comedyMovies"
+      />
+      <MovieRow
+        movies={HorrorMovies}
+        title="Horror Movies"
+        idSection="horrorMovies"
+      />
+      <MovieRow
+        movies={RomanceMovies}
+        title="Romance Movies"
+        idSection="romanceMovies"
+      />
+      <MovieRow
+        movies={Documentaries}
+        title="Documentaries "
+        idSection="documentaries"
+      />
+      <GoToTop
+        onClick={() => ScrollToTop()}
+        style={{
+          visibility: `${scrollY > 600 ? "visible" : "hidden"}`,
+        }}
+      >
+        <FaArrowAltCircleUp />
+      </GoToTop>
     </div>
   );
 }
 
 export default Contents;
+
+const GoToTop = styled.div`
+  position: fixed;
+  z-index: 10;
+  right: 70px;
+  bottom: 50px;
+  font-size: 50px;
+  color: rgba(255, 255, 255, 0.4);
+  transition: all 0.3s linear;
+
+  &:hover {
+    color: rgba(255, 255, 255, 0.8);
+  }
+
+  @media screen and (max-width: 600px) {
+    right: 40px;
+  }
+`;

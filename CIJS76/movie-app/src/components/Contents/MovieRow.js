@@ -3,24 +3,21 @@ import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { useEffect, useRef, useState } from "react";
 import { SmoothHorizontalScrolling } from "../../utils";
 import { useViewport } from "../hooks";
-// const movies = [
-//   "https://youthvietnam.vn/wp-content/uploads/2021/06/Poster-phim-quang-cao-co-hieu-qua-khong.jpg",
-//   "https://youthvietnam.vn/wp-content/uploads/2021/06/Cac-yeu-to-giup-poster-phim-thanh-cong.jpg",
-//   "https://youthvietnam.vn/wp-content/uploads/2021/06/mau-poster-phim-viet-nam.jpg",
-//   "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809230YFLaGg3GI3SV21M.jpg",
-//   "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809284X4pyEDCj7CFMsGu.jpg",
-//   "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809317niNpzY2khA3tzMg.jpg",
-//   "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809340Y397jnilYDd15KN.jpg",
-//   "https://d1j8r0kxyu9tj8.cloudfront.net/images/1566809401rAfP9FLErkemlp1.jpg",
-// ];
+import { useDispatch } from "react-redux";
+import { setMoviesDetail } from "../store/actions";
 function MovieRow(props) {
-  const { movies, title, isNetflix } = props;
+  const { movies, title, isNetflix, idSection } = props;
   const sliderRef = useRef();
   const movieRef = useRef();
   const [dragDown, setDragDown] = useState(0);
   const [dragMove, setDragMove] = useState(0);
   const [isDrag, setIsDrag] = useState(false);
   const [windowWidth] = useViewport();
+
+  const dispatch = useDispatch();
+  const handleSetMovie = (movie) => {
+    dispatch(setMoviesDetail(movie));
+  };
 
   const handleScrollRight = () => {
     const maxScrollLeft =
@@ -63,7 +60,7 @@ function MovieRow(props) {
     setDragMove(e.screenX);
   };
   return (
-    <MovieRowContainer draggable="false">
+    <MovieRowContainer draggable="false" id={idSection}>
       <h1 className="heading">{title}</h1>
       <MovieSlider
         ref={sliderRef}
@@ -88,17 +85,31 @@ function MovieRow(props) {
             : {}
         }
       >
-        {movies.map((movie, index) => (
-          <div
-            key={index}
-            className="movieItem"
-            ref={movieRef}
-            draggable="false"
-          >
-            <img src={movie} alt="" draggable="false" />
-            <div className="movieName">Movie name</div>
-          </div>
-        ))}
+        {movies &&
+          movies.length > 0 &&
+          movies.map((movie, index) => {
+            console.log(movie)
+            if (movie.poster_path && movie.backdrop_path !== null) {
+              let imageUrl = isNetflix
+                ? `http://image.tmdb.org/t/p/original/${movie.poster_path}`
+                : `http://image.tmdb.org/t/p/w500/${movie.backdrop_path}`;
+              return (
+                <div
+                  key={index}
+                  className="movieItem"
+                  ref={movieRef}
+                  draggable="false"
+                  onClick={() => handleSetMovie(movie)}
+                >
+                  <img src={imageUrl} alt="" draggable="false" />
+                  <div className="movieName">{movie.title || movie.name}</div>
+                </div>
+              );
+            }
+            return(
+              <div></div>
+            )
+          })}
       </MovieSlider>
       <div
         className={`btnLeft ${isNetflix && "isNetflix"}`}
@@ -119,7 +130,7 @@ function MovieRow(props) {
 export default MovieRow;
 
 const MovieRowContainer = styled.div`
-  backgruond-color: var(--color-background);
+  background-color: var(--color-background);
   color: var(--color-white);
   padding-top: 20px;
   padding-left: 20px;

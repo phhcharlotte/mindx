@@ -1,11 +1,26 @@
 import NetflixLogo from "../../assets/images/Netflix-logo-red-black-png.png";
 import { MdSearch } from "react-icons/md";
 import styled from "styled-components";
-// import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useScrollY } from "../hooks";
-
+import { useNavigate } from "react-router-dom";
 const Navbar = (props) => {
   const [scrollY] = useScrollY();
+  const [keywords, setKeywords] = useState("");
+  const navigate = useNavigate();
+
+  const handleChangeInput = (e) => {
+    let keywords = e.target.value;
+    setKeywords(keywords);
+    keywords.length > 0
+      ? navigate(`search?keywords=${keywords.trim()}`)
+      : navigate("/");
+  };
+
+  const goHome = () => {
+    navigate("/");
+    setKeywords("");
+  };
   return (
     <Navigation
       style={
@@ -15,12 +30,17 @@ const Navbar = (props) => {
       }
     >
       <div className="navContainer">
-        <div className="Logo">
+        <div className="Logo" onClick={goHome}>
           <img src={NetflixLogo} alt="" />
         </div>
         <div className="navSearch">
           <MdSearch className="iconSearch" />
-          <input type="text" placeholder="Input title, genres, people" />
+          <input
+            type="text"
+            placeholder="Input title, genres, people"
+            onChange={handleChangeInput}
+            value={keywords}
+          />
         </div>
       </div>
     </Navigation>
