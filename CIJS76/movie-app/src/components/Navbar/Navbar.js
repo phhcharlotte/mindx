@@ -33,7 +33,16 @@ const Navbar = (props) => {
         <div className="Logo" onClick={goHome}>
           <img src={NetflixLogo} alt="" />
         </div>
-
+        {/* <div className="menuItems">
+          <div>Home</div>
+          <div>Top Trending</div>
+          <div>Top rated</div>
+          <div>Actions Movies</div>
+          <div>Comedy Movies</div>
+          <div>Horror Movies</div>
+          <div>Romance Movies</div>
+          <div>Documentaries</div>
+        </div> */}
         <div className="navSearch">
           <MdSearch className="iconSearch" />
           <input
@@ -43,6 +52,7 @@ const Navbar = (props) => {
             value={keywords}
           />
         </div>
+        <div></div>
       </div>
     </Navigation>
   );

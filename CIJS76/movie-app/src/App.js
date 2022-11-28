@@ -1,19 +1,26 @@
-import Navbar from "./components/Navbar/Navbar";
+// import LoginScreen from "./pages/LoginScreen";
 import "./App.css";
-
-import Home from "./components/pages/Home";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
-import Search from "./components/pages/Search";
+import Home from "./pages/Home";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Search from "./pages/Search";
 function App() {
+  // const user = null;
   return (
     <div>
-      <BrowserRouter>
-        <Navbar />
+      <Router>
+        {/* {!user ? (
+          <LoginScreen />
+        ) : ( */}
         <Routes>
-          <Route exact path="/" element={<Home />} />
-          <Route path="/search" element={<Search />} />
+          <Route exact path="/">
+            <Home />
+          </Route>
+          <Route path="/search">
+            <Search />
+          </Route>
         </Routes>
-      </BrowserRouter>
+        {/* )} */}
+      </Router>
     </div>
   );
 }

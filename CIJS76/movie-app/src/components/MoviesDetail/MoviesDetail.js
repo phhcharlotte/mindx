@@ -1,10 +1,9 @@
 import React from "react";
-// import { SiMomenteo } from "react-icons/si";
 import { useDispatch } from "react-redux";
 import styled, { keyframes } from "styled-components";
 import { setMoviesDetail } from "../store/actions";
 import moment from "moment";
-// const showModal = true;
+
 function MoviesDetail(props) {
   const { movie, showModal } = props;
   const dispatch = useDispatch();
@@ -17,6 +16,7 @@ function MoviesDetail(props) {
         className={`backdrop ${showModal ? " showBackdrop" : "hideBackdrop"}`}
         onClick={handleCloseModel}
       ></div>
+      <div></div>
       <div
         className={`modal ${showModal ? "showModal " : "hideModal"}`}
         style={
